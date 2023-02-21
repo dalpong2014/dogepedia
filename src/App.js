@@ -6,7 +6,7 @@ import Pagination from "./Pagination";
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [currentPageUrl, setcurretPageUrl] = useState(
-    "https://pokeapi.co/api/v2/pokemon"
+    "https://api.thedogapi.com/v1/images/search?limit=10"
   );
   const [nextPageUrl, setNextPageUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon/next"
@@ -27,7 +27,7 @@ function App() {
         setLoading(false);
         setNextPageUrl(res.data.next);
         setPrevPageUrl(res.data.previous);
-        setPokemon(res.data.results.map((p) => p.name));
+        setPokemon(res.data.map((p) => <img src={p.url} alt="" />));
       });
 
     //clean up function. Everytime we make new request, we clean up the last request
