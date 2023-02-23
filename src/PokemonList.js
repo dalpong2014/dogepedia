@@ -1,11 +1,18 @@
 import React from "react";
 
 export default function PokemonList({ pokemon }) {
+  const createBreedList = (breedList) => {};
+
   return (
-    <div>
-      {pokemon.map((p) => (
-        <div key={p}>{p}</div>
-      ))}
-    </div>
+    <>
+      <select>
+        <option>Choose a breed !</option>
+      </select>
+      <div>
+        {pokemon.map((p) => (
+          <div key={p}>{p}</div>
+        ))}
+      </div>
+    </>
   );
 }

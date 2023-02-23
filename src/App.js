@@ -4,6 +4,11 @@ import axios from "axios";
 import Pagination from "./Pagination";
 
 function App() {
+  const headers = {
+    "x-api-key":
+      "live_reIU47ngKmIH9cdlHLzOGqeg1s4ko1EWlDDIJXysP2JEl791lLiq2cMqytkGieq4",
+  };
+
   const [pokemon, setPokemon] = useState([]);
   const [currentPageUrl, setcurretPageUrl] = useState(
     "https://api.thedogapi.com/v1/images/search?limit=10"
@@ -20,14 +25,22 @@ function App() {
     setLoading(true);
     let cancel;
     axios
-      .get(currentPageUrl, {
-        cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      })
+      .get(
+        currentPageUrl,
+        {
+          cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        },
+        { headers: headers }
+      )
       .then((res) => {
         setLoading(false);
         setNextPageUrl(res.data.next);
         setPrevPageUrl(res.data.previous);
-        setPokemon(res.data.map((p) => <img src={p.url} alt="" />));
+        setPokemon(
+          res.data.map((p) => (
+            <img style={{ height: 200, widows: 200 }} src={p.url} alt="" />
+          ))
+        );
       });
 
     //clean up function. Everytime we make new request, we clean up the last request
