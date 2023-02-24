@@ -10,6 +10,12 @@ function App() {
   };
 
   const [pokemon, setPokemon] = useState([]);
+  const [breeds, setBreeds] = useState([]);
+
+  const [breedURL, setBreedURL] = useState(
+    "https://api.thedogapi.com/v1/breeds"
+  );
+
   const [currentPageUrl, setcurretPageUrl] = useState(
     "https://api.thedogapi.com/v1/images/search?limit=10"
   );
@@ -41,6 +47,18 @@ function App() {
             <img style={{ height: 200, widows: 200 }} src={p.url} alt="" />
           ))
         );
+      });
+
+    axios
+      .get(
+        breedURL,
+        {
+          cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        },
+        { headers: headers }
+      )
+      .then((res) => {
+        setBreeds(res.data.map((breed) => console.log(breed)));
       });
 
     //clean up function. Everytime we make new request, we clean up the last request
