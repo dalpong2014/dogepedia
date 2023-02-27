@@ -10,7 +10,10 @@ export default function PokemonList({ pokemon }) {
       </select>
       <div>
         {pokemon.map((p) => (
-          <div key={p}>{p}</div>
+          <div key={p}>
+            {p}
+            <h2 className="text-red-700">hello</h2>
+          </div>
         ))}
       </div>
     </>
