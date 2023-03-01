@@ -4,11 +4,6 @@ import axios from "axios";
 import Pagination from "./Pagination";
 
 function App() {
-  const headers = {
-    "x-api-key":
-      "live_reIU47ngKmIH9cdlHLzOGqeg1s4ko1EWlDDIJXysP2JEl791lLiq2cMqytkGieq4",
-  };
-
   const [pokemon, setPokemon] = useState([]);
   const [breeds, setBreeds] = useState([]);
 
@@ -17,7 +12,7 @@ function App() {
   );
 
   const [currentPageUrl, setcurretPageUrl] = useState(
-    "https://api.thedogapi.com/v1/images/search?limit=10"
+    "https://api.thedogapi.com/v1/images/search?limit=11"
   );
   const [nextPageUrl, setNextPageUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon/next"
@@ -31,13 +26,13 @@ function App() {
     setLoading(true);
     let cancel;
     axios
-      .get(
-        currentPageUrl,
-        {
-          cancelToken: new axios.CancelToken((c) => (cancel = c)),
+      .get(currentPageUrl, {
+        cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        headers: {
+          "x-api-key":
+            "live_reIU47ngKmIH9cdlHLzOGqeg1s4ko1EWlDDIJXysP2JEl791lLiq2cMqytkGieq4",
         },
-        { headers: headers }
-      )
+      })
       .then((res) => {
         setLoading(false);
         setNextPageUrl(res.data.next);
@@ -50,13 +45,9 @@ function App() {
       });
 
     axios
-      .get(
-        breedURL,
-        {
-          cancelToken: new axios.CancelToken((c) => (cancel = c)),
-        },
-        { headers: headers }
-      )
+      .get(breedURL, {
+        cancelToken: new axios.CancelToken((c) => (cancel = c)),
+      })
       .then((res) => {
         setBreeds(res.data.map((breed) => console.log(breed)));
       });
