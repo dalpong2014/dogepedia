@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PokemonList from "./PokemonList";
+import BreedList from "./BreedList";
 import axios from "axios";
 import Pagination from "./Pagination";
 
@@ -26,7 +26,7 @@ function App() {
     setLoading(true);
     let cancel;
     axios
-      .get(currentPageUrl, {
+      .get(breedURL, {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
         headers: {
           "x-api-key":
@@ -37,26 +37,14 @@ function App() {
         setLoading(false);
         setNextPageUrl(res.data.next);
         setPrevPageUrl(res.data.previous);
-        setPokemon(
-          res.data.map((p) => (
-            <img style={{ height: 200, widows: 200 }} src={p.url} alt="" />
-          ))
-        );
-      });
-
-    axios
-      .get(breedURL, {
-        cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      })
-      .then((res) => {
-        setBreeds(res.data.map((breed) => console.log(breed)));
+        res.data.map((breed) => breeds.push(breed.name));
       });
 
     //clean up function. Everytime we make new request, we clean up the last request
     return () => {
       cancel();
     };
-  }, [currentPageUrl]);
+  }, [breedURL]);
 
   const gotoNextPage = () => {
     setcurretPageUrl(nextPageUrl);
@@ -69,7 +57,7 @@ function App() {
 
   return (
     <>
-      <PokemonList pokemon={pokemon} />
+      <BreedList breeds={breeds} />
       <Pagination
         gotoNextPage={nextPageUrl ? gotoNextPage : null}
         gotoPrevPage={prevPageUrl ? gotoPrevPage : null}
