@@ -37,6 +37,9 @@ function App() {
         setLoading(false);
         setNextPageUrl(res.data.next);
         setPrevPageUrl(res.data.previous);
+
+        // res.data.map((breed) => console.log("res data", breed));
+
         res.data.map((breed) => breeds.push(breed.name));
       });
 
